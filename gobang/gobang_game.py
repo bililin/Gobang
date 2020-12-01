@@ -2,14 +2,7 @@ import pygame
 import sys
 from pygame.locals import *
 
-# # Some basic colors
-# black = (0, 0, 0)
-# white = (255, 255, 255)
-# red = (255, 0, 0)
-# green = (0, 255, 0)
-# blue = (0, 0, 255)
-
-# Erro code
+# Error code
 positon_placed = -4
 range_error = -3
 status_error = -2
@@ -24,9 +17,7 @@ G_WIN = 2
 class game:
     '''
     Class that describe the basic logic of this game
-
     **Parameters**
-
         board_size: *int*
             The number of lines of a board in horizontal or vertical direction
     '''
@@ -91,7 +82,8 @@ class game:
 
         # Check the horizontal line
         for x in range(self.board_size):
-            if x > 0 and self.board[x][last_step[2]] != self.board[x - 1][last_step[2]]:
+            if x > 0 and self.board[x][last_step[2]] !=\
+                    self.board[x - 1][last_step[2]]:
                 pieces_number = 0
             else:
                 pieces_number += self.board[x][last_step[2]]
@@ -103,7 +95,8 @@ class game:
         # Check the vertical line
         pieces_number = 0
         for y in range(self.board_size):
-            if y > 0 and self.board[last_step[1]][y] != self.board[last_step[1]][y - 1]:
+            if y > 0 and self.board[last_step[1]][y] !=\
+                    self.board[last_step[1]][y - 1]:
                 pieces_number = 0
             else:
                 pieces_number += self.board[last_step[1]][y]
@@ -118,10 +111,12 @@ class game:
         for x in range(self.board_size):
 
             # when out of board, stop
-            if top_point[0] + x > self.board_size - 1 or top_point[1] + x > self.board_size - 1:
+            if top_point[0] + x > self.board_size - 1\
+                    or top_point[1] + x > self.board_size - 1:
                 break
 
-            if x > 0 and self.board[top_point[0] + x][top_point[1] + x] != self.board[top_point[0] + x - 1][top_point[1] + x - 1]:
+            if x > 0 and self.board[top_point[0] + x][top_point[1] + x] \
+                    != self.board[top_point[0] + x - 1][top_point[1] + x - 1]:
                 pieces_number = 0
             else:
                 pieces_number += self.board[top_point[0] + x][top_point[1] + x]
@@ -137,7 +132,8 @@ class game:
             # when out of board, stop
             if top_point[0] - x < 0 or top_point[1] + x > self.board_size - 1:
                 break
-            if x > 0 and self.board[top_point[0] - x][top_point[1] + x] != self.board[top_point[0] - x + 1][top_point[1] + x - 1]:
+            if x > 0 and self.board[top_point[0] - x][top_point[1] + x] !=\
+                    self.board[top_point[0] - x + 1][top_point[1] + x - 1]:
                 pieces_number = 0
             else:
                 pieces_number += self.board[top_point[0] - x][top_point[1] + x]
@@ -164,12 +160,9 @@ class game:
     def move(self, x, y):
         '''
         make a move and change the board list and history list
-
         **Parameters**
-
             x,y: *int*
                 The coordinate of the piece that you want to put
-
         '''
 
         # exclude some errors might happen
@@ -226,12 +219,9 @@ class game:
 class game_window(game):
     '''
     Use the pygame package to create a window to play the game
-
     **Parameters**
-
         board_size: *int*
             The number of lines of a board in horizontal or vertical direction
-
         unit: *int*
             The side length of a small square in a board
     '''
@@ -257,7 +247,8 @@ class game_window(game):
 
         # calculate the range of the right panel
         self.panel_x = [self.border_width + (self.size - 1) * self.unit,
-                        self.border_width + (self.size - 1) * self.unit + self.panel_width]
+                        (self.border_width + (self.size - 1) * self.unit + (
+                         self.panel_width))]
         self.panel_y = [self.border_width,
                         self.border_width + (self.size - 1) * self.unit]
 
@@ -344,7 +335,8 @@ class game_window(game):
         self.surface_btn = self.panel_font.render(
             f'Exit game', False, (255, 255, 255))
         self.screen.blit(self.surface_btn,
-                         [offset_x + btn_text_x, offset_y + btn_h + btn_gap + btn_text_y])
+                         [offset_x + btn_text_x,
+                          offset_y + btn_h + btn_gap + btn_text_y])
 
         # undo button
         self.BTN_RANGE_RB_X = [offset_x, offset_x + btn_w]
@@ -356,7 +348,8 @@ class game_window(game):
         self.surface_btn = self.panel_font.render(
             f'Undo', False, (255, 255, 255))
         self.screen.blit(self.surface_btn,
-                         [offset_x + btn_text_x, offset_y + (btn_h + btn_gap) * 2 + btn_text_y])
+                         [offset_x + btn_text_x,
+                          offset_y + (btn_h + btn_gap) * 2 + btn_text_y])
 
     def draw_board(self):
         '''
@@ -376,7 +369,8 @@ class game_window(game):
                               self.border_width + row * self.unit], 1)
             surface = font.render(f'{row + 1}', True, (0, 0, 0))
             self.screen.blit(
-                surface, [self.border_width - 30, self.border_width + row * self.unit - 10])
+                surface, [self.border_width - 30,
+                          self.border_width + row * self.unit - 10])
 
         # draw lines of columns
         for col in range(self.size):
@@ -385,10 +379,12 @@ class game_window(game):
                              [self.border_width + col * self.unit,
                               self.border_width],
                              [self.border_width + col * self.unit,
-                              self.border_width + (self.size - 1) * self.unit], 1)
+                              self.border_width + (self.size - 1) * self.unit],
+                             1)
             surface = font.render(chr(ord('A') + col), True, (0, 0, 0))
             self.screen.blit(
-                surface, [self.border_width + col * self.unit - 5, self.border_width - 30])
+                surface, [self.border_width + col * self.unit - 5,
+                          self.border_width - 30])
 
         # draw the star position
         pos = [(3, 3), (11, 3), (3, 11), (11, 11), (7, 7)]
@@ -447,16 +443,14 @@ class game_window(game):
     def MOVE(self, position):
         '''
         Make a move
-
         **Parameters**
-
             position: *tuple*
                 The coordinate of the position that user clicks
-
         '''
         # print(position)
         if position[0] < self.range_x[0] or position[0] > self.range_x[1] \
-                or position[1] < self.range_y[0] or position[1] > self.range_y[1]:
+                or position[1] < self.range_y[0] \
+                or position[1] > self.range_y[1]:
             return range_error
 
         # locate the position that user clicks on
@@ -495,21 +489,24 @@ class game_window(game):
     def check_button(self, position):
         '''
         Check if user click the button
-
         **Parameters**
-
             position: *tuple*
                 The coordinate of the position that user clicks
         '''
-        if self.BTN_RANGE_NEW_START_X[0] < position[0] < self.BTN_RANGE_NEW_START_X[1] \
-                and self.BTN_RANGE_NEW_START_Y[0] < position[1] < self.BTN_RANGE_NEW_START_Y[1]:
+        if self.BTN_RANGE_NEW_START_X[0] < position[0] < \
+            self.BTN_RANGE_NEW_START_X[1] \
+                and self.BTN_RANGE_NEW_START_Y[0] < position[1] < \
+                self.BTN_RANGE_NEW_START_Y[1]:
             self.New_game()
             return G_Ongoing
-        elif self.BTN_RANGE_EXIT_GAME_X[0] < position[0] < self.BTN_RANGE_EXIT_GAME_X[1] \
-                and self.BTN_RANGE_EXIT_GAME_Y[0] < position[1] < self.BTN_RANGE_EXIT_GAME_Y[1]:
+        elif self.BTN_RANGE_EXIT_GAME_X[0] < position[0] < \
+            self.BTN_RANGE_EXIT_GAME_X[1] \
+                and self.BTN_RANGE_EXIT_GAME_Y[0] < position[1] < \
+                self.BTN_RANGE_EXIT_GAME_Y[1]:
             sys.exit()
         elif self.BTN_RANGE_RB_X[0] < position[0] < self.BTN_RANGE_RB_X[1] \
-                and self.BTN_RANGE_RB_Y[0] < position[1] < self.BTN_RANGE_RB_Y[1]:
+                and self.BTN_RANGE_RB_Y[0] < position[1] < \
+                self.BTN_RANGE_RB_Y[1]:
             self.UNDO()
             return G_Ongoing
         else:
